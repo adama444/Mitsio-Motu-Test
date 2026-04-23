@@ -1,7 +1,13 @@
 # Test Technique DE-01 — Standardisation de données ministérielles
 
-> **Programme** : PDAAP — Digitalisation des Administrations Publiques du Togo  
-> **Poste** : Data Engineer Junior  
+> [!WARNING]
+> **CAS FICTIF — DONNÉES SIMULÉES**
+>
+> L'ensemble de ce test technique est un **cas entièrement fictif**. Le scénario, les organisations mentionnées, les données fournies (établissements, effectifs, enseignants, budgets) ainsi que tout élément contextuel sont **inventés à des fins pédagogiques**. Ils ne reflètent aucune réalité, aucune organisation réelle, et ne doivent pas être utilisés à d'autres fins que l'évaluation technique.
+
+---
+
+> **Poste** : Data Engineer  
 > **Durée** : 3 heures  
 > **Validation** : `uv sync && uv run pytest`
 
@@ -9,7 +15,7 @@
 
 ## Contexte
 
-Dans le cadre du PDAAP, chaque ministère transmet ses données dans des formats hétérogènes (CSV, Excel, encodages variés). En tant que Data Engineer, votre première mission est de **standardiser ces fichiers bruts en un format analytique exploitable** (couche Silver de l'architecture medallion), puis de **construire une vue agrégée** (couche Gold) dans DuckDB.
+Dans le cadre de ce scénario fictif, chaque ministère transmet ses données dans des formats hétérogènes (CSV, Excel, encodages variés). En tant que Data Engineer, votre première mission est de **standardiser ces fichiers bruts en un format analytique exploitable** (couche Silver de l'architecture medallion), puis de **construire une vue agrégée** (couche Gold) dans DuckDB.
 
 Vous travaillez sur les données du **Ministère fictif de l'Éducation et de la Formation Professionnelle**. Le ministère a transmis 4 fichiers de sources différentes, dans des formats et qualités variés.
 

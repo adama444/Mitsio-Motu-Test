@@ -7,3 +7,4 @@ data/silver/*.parquet
 data/gold/*.parquet
 *.duckdb
 *.duckdb.wal
+/scripts/

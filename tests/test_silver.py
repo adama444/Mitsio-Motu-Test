@@ -58,8 +58,8 @@ def test_etablissements_schema(silver_dir: Path) -> None:
     assert colonnes_attendues.issubset(set(df.columns)), (
         f"Colonnes manquantes : {colonnes_attendues - set(df.columns)}"
     )
-    assert df["code_etablissement"].dtype == object, "code_etablissement doit être str"
-    assert df["region"].dtype == object, "region doit être str"
+    assert pd.api.types.is_string_dtype(df["code_etablissement"]), "code_etablissement doit être str"
+    assert pd.api.types.is_string_dtype(df["region"]), "region doit être str"
 
 
 def test_effectifs_schema(silver_dir: Path) -> None:
@@ -91,8 +91,8 @@ def test_enseignants_schema(silver_dir: Path) -> None:
     assert colonnes_attendues.issubset(set(df.columns)), (
         f"Colonnes manquantes : {colonnes_attendues - set(df.columns)}"
     )
-    assert df["matricule"].dtype == object, "matricule doit être str"
-    assert df["statut"].dtype == object, "statut doit être str"
+    assert pd.api.types.is_string_dtype(df["matricule"]), "matricule doit être str"
+    assert pd.api.types.is_string_dtype(df["statut"]), "statut doit être str"
 
 
 def test_budgets_schema(silver_dir: Path) -> None:
