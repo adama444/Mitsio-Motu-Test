@@ -1,0 +1,6 @@
+2026-04-27 13:29:16,158 - INFO - Logger initialisé pour clean_budgets
+2026-04-27 13:29:16,159 - INFO - Fichier de log: /home/adama/Workspace/Test_technique_DE/logs/clean_budgets_20260427_132916.log
+2026-04-27 13:29:16,159 - INFO - Exécution de la requête d'agrégation avec CTE...
+2026-04-27 13:29:16,176 - INFO - Table Gold construite: 15 lignes, 9 colonnes
+2026-04-27 13:29:16,187 - INFO - Export réussi: /home/adama/Workspace/Test_technique_DE/data/gold/synthese_regionale.parquet
+2026-04-27 13:29:16,190 - INFO - Connexion DuckDB fermée

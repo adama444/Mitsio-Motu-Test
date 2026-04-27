@@ -1,0 +1,35 @@
+2026-04-27 13:29:12,050 - INFO - Logger initialisé pour clean_etablissements
+2026-04-27 13:29:12,051 - INFO - Fichier de log: /home/adama/Workspace/Test_technique_DE/logs/clean_etablissements_20260427_132912.log
+2026-04-27 13:29:12,059 - INFO - Suppression des doublons sur code_etablissement: 3 doublons supprimés
+2026-04-27 13:29:12,072 - INFO - Fichier écrit: /home/adama/Workspace/Test_technique_DE/data/silver/etablissements.parquet (34 lignes)
+2026-04-27 13:29:12,072 - INFO - Logger initialisé pour clean_effectifs
+2026-04-27 13:29:12,072 - INFO - Fichier de log: /home/adama/Workspace/Test_technique_DE/logs/clean_effectifs_20260427_132912.log
+2026-04-27 13:29:12,087 - WARNING - Intégrité référentielle: 2 lignes supprimées (code_etablissement invalide)
+2026-04-27 13:29:12,087 - INFO - Lignes supprimées sauvegardées dans /home/adama/Workspace/Test_technique_DE/logs/effectifs_sans_etablissement.csv
+2026-04-27 13:29:12,088 - INFO - Après intégrité référentielle: 83 lignes conservées
+2026-04-27 13:29:12,088 - INFO - Valeurs manquantes sur nb_filles: 1 (1.20%)
+2026-04-27 13:29:12,088 - INFO - Stratégie 1: Suppression pure (taux manquants: 1.20% <= 5%)
+2026-04-27 13:29:12,089 - INFO - Lignes à supprimer: 1
+2026-04-27 13:29:12,089 - INFO - Fichier sauvegardé: /home/adama/Workspace/Test_technique_DE/logs/deleted_rows_clean_effectifs_20260427_132912.csv
+2026-04-27 13:29:12,093 - INFO - Données après suppression: 82 lignes (perte de 1 lignes)
+2026-04-27 13:29:12,095 - INFO - Fichier écrit: /home/adama/Workspace/Test_technique_DE/data/silver/effectifs.parquet (82 lignes)
+2026-04-27 13:29:12,096 - INFO - Logger initialisé pour clean_enseignants
+2026-04-27 13:29:12,096 - INFO - Fichier de log: /home/adama/Workspace/Test_technique_DE/logs/clean_enseignants_20260427_132912.log
+2026-04-27 13:29:12,220 - INFO - Fusion des deux ongletsterminée: 511 lignes au total
+2026-04-27 13:29:12,220 - INFO - Conversion des dates au format ISO 8601
+2026-04-27 13:29:12,220 - INFO - Colonnes de dates détectées: ['date_prise_de_poste', 'date_fin_contrat']
+2026-04-27 13:29:12,227 - INFO - Après intégrité référentielle: 511 lignes conservées
+2026-04-27 13:29:12,228 - INFO - Gestion des doublons sur matricule
+2026-04-27 13:29:12,234 - INFO - Détail des doublons supprimés: /home/adama/Workspace/Test_technique_DE/logs/doublons_enseignants_supprimes.csv
+2026-04-27 13:29:12,237 - INFO - Fichier écrit: /home/adama/Workspace/Test_technique_DE/data/silver/enseignants.parquet (508 lignes)
+2026-04-27 13:29:12,237 - INFO - Logger initialisé pour clean_budgets
+2026-04-27 13:29:12,237 - INFO - Fichier de log: /home/adama/Workspace/Test_technique_DE/logs/clean_budgets_20260427_132912.log
+2026-04-27 13:29:12,247 - INFO - Normalisation des noms de régions (approche regex)
+2026-04-27 13:29:12,249 - INFO -   - Valeurs uniques après (Régions): 5
+2026-04-27 13:29:12,249 - INFO - Traitement de la colonne: budget_fonctionnement
+2026-04-27 13:29:12,251 - INFO - NaN remplacés par 0: 1
+2026-04-27 13:29:12,251 - INFO - Traitement de la colonne: budget_investissement
+2026-04-27 13:29:12,253 - INFO - NaN remplacés par 0: 1
+2026-04-27 13:29:12,253 - INFO - Traitement de la colonne: budget_total
+2026-04-27 13:29:12,255 - INFO - NaN remplacés par 0: 1
+2026-04-27 13:29:12,257 - INFO - Fichier écrit: /home/adama/Workspace/Test_technique_DE/data/silver/budgets.parquet (15 lignes)
