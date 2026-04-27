@@ -4,12 +4,10 @@ Standardisation des données brutes du Ministère de l'Éducation.
 """
 
 from pathlib import Path
-
 import pandas as pd
-
 import logging
-
 from datetime import datetime
+import re
 
 # Chemins par défaut (relatifs à la racine du projet)
 RAW_DIR = Path(__file__).parent.parent / "data" / "raw"
@@ -160,6 +158,41 @@ def _handle_missing_by_imputation(data: pd.DataFrame, logger: logging.Logger, lo
     logger.info(f"Statistiques après imputation - Moyenne: {data_clean['nb_filles'].mean():.2f}, Médiane: {data_clean['nb_filles'].median():.2f}")
     
     return data_clean
+
+
+def normalize_region(region_str: str) -> str:
+    """Normalise les noms de régions en utilisant des regex patterns.
+    
+    Args:
+        region_str: Chaîne de caractères représentant le nom de la région
+        
+    Returns:
+        Nom normalisé de la région
+    """
+    if pd.isna(region_str):
+        return pd.NA
+
+    region = str(region_str).lower().strip()
+    
+    # Supprimer les préfixes communs
+    region = re.sub(r'^(r[ée]gion)\s+(de\s+)?', '', region)
+    
+    # Mapping regex -> région normalisée
+    patterns = {
+        r'kara': 'Kara',
+        r'savanes?': 'Savanes',
+        r'centrale|centre': 'Centrale',
+        r'maritime': 'Maritime',
+        r'plateaux?': 'Plateaux',
+    }
+    
+    # Appliquer le premier pattern qui correspond
+    for pattern, normalized in patterns.items():
+        if re.search(pattern, region):
+            return normalized
+    
+    # Si aucun pattern ne correspond, retourner la version title case
+    return region.title()
 
 
 def clean_etablissements(raw_dir: Path, silver_dir: Path) -> None:
@@ -458,6 +491,19 @@ def clean_budgets(raw_dir: Path, silver_dir: Path) -> None:
     
     # Remplace les caractères accentués dans les noms de colonnes
     data.columns = data.columns.str.translate(str.maketrans(accent_map))
+            
+    if 'region' in data.columns:
+        logger.info("Normalisation des noms de régions (approche regex)")
+        
+        # Appliquer la normalisation
+        data['region_normalisee'] = data['region'].apply(normalize_region)
+        
+        # Remplacer la colonne originale
+        data['region'] = data['region_normalisee']
+        data = data.drop(columns=['region_normalisee'])
+        
+        unique_after = data['region'].nunique()
+        logger.info(f"  - Valeurs uniques après (Régions): {unique_after}")
     
     # Identification des colonnes budget
     budget_columns = []
@@ -465,7 +511,7 @@ def clean_budgets(raw_dir: Path, silver_dir: Path) -> None:
     for col in data.columns:
         if "budget" in col:
             budget_columns.append(col)
-    
+
     if budget_columns:
         for col in budget_columns:
             logger.info(f"Traitement de la colonne: {col}")
