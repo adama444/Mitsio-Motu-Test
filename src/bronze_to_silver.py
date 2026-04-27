@@ -27,7 +27,30 @@ def clean_etablissements(raw_dir: Path, silver_dir: Path) -> None:
         raw_dir: Répertoire contenant les fichiers sources bruts.
         silver_dir: Répertoire de destination pour les fichiers Parquet nettoyés.
     """
-    raise NotImplementedError
+    
+    accent_map = {
+        'è': 'e', 
+        'é': 'e', 
+    }
+    
+    data = pd.read_csv(raw_dir / "etablissements_scolaires.csv", encoding="latin-1", sep=";")
+    
+    data.columns = data.columns.str.lower().str.replace(" ", "_")
+    
+    # Remplace les caractères accentués dans les noms de colonnes
+    data.columns = data.columns.str.translate(str.maketrans(accent_map))
+    
+    if "code_etablissement" in data.columns:
+        data = data.drop_duplicates(subset="code_etablissement", keep="first")
+    
+    if ("region", "prefecture", "date_creation") in data.columns:
+        data["region"] = data["region"].str.strip()
+        data["prefecture"] = data["prefecture"].str.strip()
+        data["date_creation"] = pd.to_datetime(data["date_creation"], format="%d/%m/%Y", errors="coerce")
+    
+    silver_dir.mkdir(parents=True, exist_ok=True)
+    
+    data.to_parquet(silver_dir / "etablissements.parquet", index=False)
 
 
 def clean_effectifs(raw_dir: Path, silver_dir: Path) -> None:
