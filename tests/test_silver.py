@@ -85,7 +85,7 @@ def test_enseignants_schema(silver_dir: Path) -> None:
         "prenom",
         "code_etablissement",
         "matiere",
-        "date_prise_poste",
+        "date_prise_de_poste",
         "statut",
     }
     assert colonnes_attendues.issubset(set(df.columns)), (
