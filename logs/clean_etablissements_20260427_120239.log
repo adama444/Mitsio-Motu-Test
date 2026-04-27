@@ -1,0 +1,24 @@
+2026-04-27 12:02:39,576 - INFO - Logger initialisé pour clean_etablissements
+2026-04-27 12:02:39,576 - INFO - Fichier de log: /home/adama/Workspace/Test_technique_DE/logs/clean_etablissements_20260427_120239.log
+2026-04-27 12:02:39,586 - INFO - Suppression des doublons sur code_etablissement: 3 doublons supprimés
+2026-04-27 12:02:39,599 - INFO - Fichier écrit: /home/adama/Workspace/Test_technique_DE/data/silver/etablissements.parquet (34 lignes)
+2026-04-27 12:02:39,600 - INFO - Logger initialisé pour clean_effectifs
+2026-04-27 12:02:39,600 - INFO - Fichier de log: /home/adama/Workspace/Test_technique_DE/logs/clean_effectifs_20260427_120239.log
+2026-04-27 12:02:39,619 - WARNING - Intégrité référentielle: 2 lignes supprimées (code_etablissement invalide)
+2026-04-27 12:02:39,619 - INFO - Lignes supprimées sauvegardées dans /home/adama/Workspace/Test_technique_DE/logs/effectifs_sans_etablissement.csv
+2026-04-27 12:02:39,621 - INFO - Après intégrité référentielle: 83 lignes conservées
+2026-04-27 12:02:39,621 - INFO - Valeurs manquantes sur nb_filles: 1 (1.20%)
+2026-04-27 12:02:39,622 - INFO - Stratégie 1: Suppression pure (taux manquants: 1.20% <= 5%)
+2026-04-27 12:02:39,623 - INFO - Lignes à supprimer: 1
+2026-04-27 12:02:39,623 - INFO - Fichier sauvegardé: /home/adama/Workspace/Test_technique_DE/logs/deleted_rows_clean_effectifs_20260427_120239.csv
+2026-04-27 12:02:39,628 - INFO - Données après suppression: 82 lignes (perte de 1 lignes)
+2026-04-27 12:02:39,632 - INFO - Fichier écrit: /home/adama/Workspace/Test_technique_DE/data/silver/effectifs.parquet (82 lignes)
+2026-04-27 12:02:39,632 - INFO - Logger initialisé pour clean_enseignants
+2026-04-27 12:02:39,632 - INFO - Fichier de log: /home/adama/Workspace/Test_technique_DE/logs/clean_enseignants_20260427_120239.log
+2026-04-27 12:02:39,772 - INFO - Fusion des deux ongletsterminée: 511 lignes au total
+2026-04-27 12:02:39,772 - INFO - Conversion des dates au format ISO 8601
+2026-04-27 12:02:39,772 - INFO - Colonnes de dates détectées: ['date_prise_de_poste', 'date_fin_contrat']
+2026-04-27 12:02:39,779 - INFO - Après intégrité référentielle: 511 lignes conservées
+2026-04-27 12:02:39,779 - INFO - Gestion des doublons sur matricule
+2026-04-27 12:02:39,785 - INFO -   - Détail des doublons supprimés: /home/adama/Workspace/Test_technique_DE/logs/doublons_enseignants_supprimes.csv
+2026-04-27 12:02:39,787 - INFO - Fichier écrit: /home/adama/Workspace/Test_technique_DE/data/silver/enseignants.parquet (508 lignes)
