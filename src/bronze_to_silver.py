@@ -202,10 +202,11 @@ def clean_etablissements(raw_dir: Path, silver_dir: Path) -> None:
         data = data.drop_duplicates(subset="code_etablissement", keep="first")
         logger.info(f"Suppression des doublons sur code_etablissement: {duplicate_count} doublons supprimés")
     
-    if ("region", "prefecture", "date_creation") in data.columns:
+    if {"region", "prefecture", "date_creation"}.issubset(data.columns):
         data["region"] = data["region"].str.strip()
         data["prefecture"] = data["prefecture"].str.strip()
         data["date_creation"] = pd.to_datetime(data["date_creation"], format="%d/%m/%Y", errors="coerce")
+        data['date_creation'] = data['date_creation'].dt.date
     
     silver_dir.mkdir(parents=True, exist_ok=True)
     
@@ -452,6 +453,39 @@ def clean_budgets(raw_dir: Path, silver_dir: Path) -> None:
     except Exception as e:
         logger.error(f"Erreur lors de la lecture du fichier {excel_file}: {e}")
         raise
+    
+    data.columns = data.columns.str.lower().str.replace(" ", "_")
+    
+    # Remplace les caractères accentués dans les noms de colonnes
+    data.columns = data.columns.str.translate(str.maketrans(accent_map))
+    
+    # Identification des colonnes budget
+    budget_columns = []
+    
+    for col in data.columns:
+        if "budget" in col:
+            budget_columns.append(col)
+    
+    if budget_columns:
+        for col in budget_columns:
+            logger.info(f"Traitement de la colonne: {col}")
+            # Remplacer les valeurs non numériques par NaN
+            for non_num in non_numeric_values:
+                data[col] = data[col].replace(non_num, pd.NA, regex=False)
+                
+            # Remplacer les chaînes vides par NaN
+            data[col] = data[col].replace(['', ' '], pd.NA)
+            
+            # Conversion en float (les NaN restent NaN)
+            data[col] = pd.to_numeric(data[col], errors='coerce')
+
+            zero_filled = data[col].isna().sum()
+            data[col] = data[col].fillna(0)
+            logger.info(f"NaN remplacés par 0: {zero_filled}")
+            
+    silver_dir.mkdir(parents=True, exist_ok=True)
+    data.to_parquet(silver_dir / "budgets.parquet", index=False)
+    logger.info(f"Fichier écrit: {silver_dir / 'budgets.parquet'} ({len(data)} lignes)")
     
 
 def run_pipeline() -> None:
